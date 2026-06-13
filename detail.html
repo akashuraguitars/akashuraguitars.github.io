@@ -12,13 +12,13 @@
     <nav class="bg-black text-white p-5 shadow-md sticky top-0 z-50">
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center">
-                <a href="index.html">
+                <a href="/">
                     <img src="logo.png" alt="Akashura Logo" class="h-[24px] w-auto object-contain">
                 </a>
             </div>
             <ul class="flex space-x-8 text-sm uppercase font-light">
                 <li class="relative">
-                    <a href="index.html" class="hover:text-gray-400 cursor-pointer">Products</a>
+                    <a href="/" class="hover:text-gray-400 cursor-pointer">Products</a>
                 </li>
                 <li class="text-gray-600 cursor-not-allowed">Story</li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
@@ -59,7 +59,7 @@
                     ${imageHtml}
                     <h1 class="text-4xl font-bold mb-4">${fields.title}</h1>
                     <p class="text-gray-700 whitespace-pre-line leading-relaxed text-lg">${fields.description || 'No description available.'}</p>
-                    <a href="index.html" class="inline-block mt-8 px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition">Back to Products</a>
+                    <a href="/" class="inline-block mt-8 px-6 py-2 bg-black text-white rounded hover:bg-gray-800 transition">Back to Products</a>
                 `;
             } catch (err) {
                 document.getElementById('detail-view').innerHTML = '<p class="text-red-500">Error loading product details.</p>';
