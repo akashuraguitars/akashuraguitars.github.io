@@ -16,17 +16,18 @@
                 <li class="relative">
                     <a href="/" class="hover:text-gray-400">HOME</a>
                 </li>
-                    <li class="relative">
-                        <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
-                        <!-- STORY 下拉選單 -->
-                        <div id="story-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
-                        </div>
-                    </li>
-                    <li class="relative">
-                        <button onclick="toggleProducts()" class="hover:text-gray-400">PRODUCTS</button>
-                        <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
-                    </li>
+                <li class="relative">
+                    <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
+                    <!-- STORY 下拉選單 -->
+                    <div id="story-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
+                    </div>
+                </li>
+                <li class="relative">
+                    <button onclick="toggleProducts()" class="hover:text-gray-400">PRODUCTS</button>
+                    <!-- PRODUCTS 下拉選單 -->
+                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
+                </li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
                 <li class="text-gray-600 cursor-not-allowed">Contact</li>
             </ul>
@@ -44,7 +45,7 @@
         </div>
     </div>
 
-    <!-- 形象大圖：移除固定高度，使用寬高比容器 -->
+    <!-- 形象大圖 -->
     <div id="hero-section" class="w-full relative overflow-hidden aspect-[16/9] md:aspect-[21/9]">
         <img src="https://images.ctfassets.net/w2up5vfofaou/6IlEBCrhlT4XPvzgjbZhOa/c9410775bd83e355229c485b01abfb1a/Gemini_Generated_Image_yte.png" class="absolute w-full h-full object-cover" alt="Hero Image">
     </div>
@@ -61,7 +62,7 @@
 
         const view = document.getElementById('content-view');
         const dropdown = document.getElementById('dropdown-menu');
-        const storyDropdown = document.getElementById('story-dropdown');
+        const storyMenu = document.getElementById('story-menu');
         const hero = document.getElementById('hero-section');
         const brandImage = document.getElementById('brand-image');
         const brandTitle = document.getElementById('brand-title');
@@ -71,10 +72,10 @@
         // 分開控制兩個選單
         function toggleProducts() { 
             dropdown.classList.toggle('hidden'); 
-            storyDropdown.classList.add('hidden'); // 確保互斥
+            storyMenu.classList.add('hidden'); // 確保互斥
         }
         function toggleStory() { 
-            storyDropdown.classList.toggle('hidden'); 
+            storyMenu.classList.toggle('hidden'); 
             dropdown.classList.add('hidden'); // 確保互斥
         }
 
@@ -87,7 +88,6 @@
         async function initNav() {
             try {
                 const catData = await client.getEntries({ content_type: 'category' });
-                // 只更新 Products 的 dropdown
                 dropdown.innerHTML = catData.items.map(cat => `
                     <button onclick="renderSeries('${cat.sys.id}'); toggleProducts();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">${cat.fields.name || 'Untitled'}</button>
                 `).join('');
