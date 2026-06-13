@@ -13,18 +13,21 @@
     <nav class="bg-black text-white p-5 sticky top-0 z-50">
         <div class="container mx-auto flex justify-end items-center">
             <ul class="flex space-x-8 text-sm uppercase font-light">
-                <!-- STORY 選單：暫時為靜態佔位，不使用 Products 邏輯 -->
-                <li class="relative">
-                    <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
-                    <div id="story-dropdown" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Story</a>
-                    </div>
-                </li>
-                <!-- PRODUCTS 選單 -->
-                <li class="relative">
-                    <button onclick="toggleProducts()" class="hover:text-gray-400">PRODUCTS</button>
-                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
-                </li>
+                <ul class="flex space-x-8 text-sm uppercase font-light">
+                    <li class="relative">
+                        <a href="/" class="hover:text-gray-400">HOME</a>
+                    </li>
+                    <li class="relative">
+                        <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
+                        <!-- STORY 下拉選單 -->
+                        <div id="story-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
+                        </div>
+                    </li>
+                    <li class="relative">
+                        <button onclick="toggleProducts()" class="hover:text-gray-400">PRODUCTS</button>
+                        <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
+                    </li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
                 <li class="text-gray-600 cursor-not-allowed">Contact</li>
             </ul>
