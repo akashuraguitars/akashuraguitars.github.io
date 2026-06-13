@@ -9,7 +9,7 @@
 </head>
 <body class="bg-gray-100">
 
-    <!-- 導航列 (已取消左上角寫死的 LOGO) -->
+    <!-- 導航列 -->
     <nav class="bg-black text-white p-5 sticky top-0 z-50">
         <div class="container mx-auto flex justify-end items-center">
             <ul class="flex space-x-8 text-sm uppercase font-light">
@@ -24,10 +24,15 @@
         </div>
     </nav>
 
-    <!-- 中間品牌區塊 (已改為動態容器，支援大比例品牌標牌) -->
-    <div id="brand-header" class="text-center py-10 bg-white shadow-sm border-b border-gray-100">
-        <h1 id="brand-title" class="text-4xl md:text-5xl font-extrabold tracking-widest text-black uppercase">Akashura Guitars</h1>
-        <p id="brand-slogan" class="text-base md:text-lg text-gray-500 mt-2 font-light tracking-widest uppercase">Crafting Personality.</p>
+    <!-- 中間品牌區塊 (支持圖片形式的 BrandName 與文字 Slogan，大比例設計) -->
+    <div id="brand-header" class="flex flex-col items-center justify-center py-12 bg-white shadow-sm border-b border-gray-100 px-4">
+        <!-- 品牌圖片容器：預設寬度大，保持響應式比例 -->
+        <div id="brand-logo-container" class="w-[70%] md:w-[35%] max-w-[500px] flex justify-center mb-3">
+            <img id="brand-image" src="logo.png" alt="Akashura Guitars" class="w-full h-auto object-contain">
+        </div>
+        <!-- 備用文字標題：僅在沒設定圖片時顯示，設定為 hidden -->
+        <h1 id="brand-title" class="text-4xl md:text-5xl font-extrabold tracking-widest text-black uppercase hidden">Akashura Guitars</h1>
+        <p id="brand-slogan" class="text-sm md:text-base text-gray-500 font-light tracking-widest uppercase text-center">Crafting Personality.</p>
     </div>
 
     <!-- 形象大圖 -->
@@ -48,8 +53,10 @@
         const view = document.getElementById('content-view');
         const dropdown = document.getElementById('dropdown-menu');
         const hero = document.getElementById('hero-section');
+        const brandImage = document.getElementById('brand-image');
         const brandTitle = document.getElementById('brand-title');
         const brandSlogan = document.getElementById('brand-slogan');
+        const logoContainer = document.getElementById('brand-logo-container');
 
         function toggleMenu() { dropdown.classList.toggle('hidden'); }
 
@@ -77,10 +84,23 @@
                     if (fields.heroImage) {
                         hero.querySelector('img').src = 'https:' + fields.heroImage.fields.file.url;
                     }
-                    // 更新品牌名稱與 Slogan (如果您在 Contentful 建立了對應欄位)
+                    
+                    // 動態品牌名稱圖片邏輯
                     if (fields.brandName) {
-                        brandTitle.textContent = fields.brandName;
+                        // 如果 brandName 有綁定圖片，取得 URL 並更換圖片
+                        const logoUrl = fields.brandName.fields?.file?.url 
+                            ? 'https:' + fields.brandName.fields.file.url 
+                            : 'logo.png';
+                        brandImage.src = logoUrl;
+                        logoContainer.classList.remove('hidden');
+                        brandTitle.classList.add('hidden');
+                    } else {
+                        // 如果沒有設定圖片，則退回顯示大字體標題
+                        logoContainer.classList.add('hidden');
+                        brandTitle.classList.remove('hidden');
                     }
+                    
+                    // 更新 Slogan 文字
                     if (fields.slogan) {
                         brandSlogan.textContent = fields.slogan;
                     }
