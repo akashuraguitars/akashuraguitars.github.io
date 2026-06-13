@@ -13,12 +13,16 @@
     <nav class="bg-black text-white p-5 sticky top-0 z-50">
         <div class="container mx-auto flex justify-end items-center">
             <ul class="flex space-x-8 text-sm uppercase font-light">
+                <!-- STORY 選單：暫時為靜態佔位，不使用 Products 邏輯 -->
                 <li class="relative">
-                    <button onclick="toggleMenu()" class="hover:text-gray-400">STORY</button>
-                    <!-- 這裡是Story的選單內容 -->
+                    <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
+                    <div id="story-dropdown" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Story</a>
+                    </div>
                 </li>
+                <!-- PRODUCTS 選單 -->
                 <li class="relative">
-                    <button onclick="toggleMenu()" class="hover:text-gray-400">Products</button>
+                    <button onclick="toggleProducts()" class="hover:text-gray-400">PRODUCTS</button>
                     <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
                 </li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
@@ -27,17 +31,13 @@
         </div>
     </nav>
 
-    <!-- 中間品牌區塊 (留白空間大幅縮減，讓橫欄高度變扁、更精緻) -->
+    <!-- 中間品牌區塊 -->
     <div id="brand-header" class="flex flex-col items-center justify-center py-1.5 bg-white shadow-sm border-b border-gray-100 px-4">
-        <!-- 統一的寬度容器，確保 Logo 和 Slogan 共享同一個物理寬度邊界 -->
         <div class="w-[85%] md:w-[45%] max-w-[650px] flex flex-col items-center">
-            <!-- 品牌圖片容器 -->
             <div id="brand-logo-container" class="w-full flex justify-center mb-0">
                 <img id="brand-image" src="logo.png" alt="Akashura Guitars" class="w-full h-auto object-contain">
             </div>
-            <!-- 備用文字標題：僅在沒設定圖片時顯示 -->
             <h1 id="brand-title" class="text-4xl md:text-5xl font-extrabold tracking-widest text-black uppercase hidden">Akashura Guitars</h1>
-            <!-- Slogan 文字：使用 text-justify 以及 letter-spacing 撐開，達到齊頭尾的現代畫廊級設計感 -->
             <p id="brand-slogan" class="w-full text-center text-[9px] md:text-xs text-gray-500 font-light uppercase mt-1 tracking-[0.26em] md:tracking-[0.43em] whitespace-nowrap pl-[0.26em] md:pl-[0.43em]">Crafting Personality.</p>
         </div>
     </div>
@@ -59,13 +59,22 @@
 
         const view = document.getElementById('content-view');
         const dropdown = document.getElementById('dropdown-menu');
+        const storyDropdown = document.getElementById('story-dropdown');
         const hero = document.getElementById('hero-section');
         const brandImage = document.getElementById('brand-image');
         const brandTitle = document.getElementById('brand-title');
         const brandSlogan = document.getElementById('brand-slogan');
         const logoContainer = document.getElementById('brand-logo-container');
 
-        function toggleMenu() { dropdown.classList.toggle('hidden'); }
+        // 分開控制兩個選單
+        function toggleProducts() { 
+            dropdown.classList.toggle('hidden'); 
+            storyDropdown.classList.add('hidden'); // 確保互斥
+        }
+        function toggleStory() { 
+            storyDropdown.classList.toggle('hidden'); 
+            dropdown.classList.add('hidden'); // 確保互斥
+        }
 
         function getImageUrl(fields) {
             const img = fields.image || fields.seriesImage || fields.subseriesImage;
@@ -73,44 +82,28 @@
             return img?.fields?.file ? 'https:' + img.fields.file.url : 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300&q=80';
         }
 
-        // 初始化選單與大圖，並動態抓取品牌標牌資訊
         async function initNav() {
             try {
-                // 1. 抓取分類
                 const catData = await client.getEntries({ content_type: 'category' });
+                // 只更新 Products 的 dropdown
                 dropdown.innerHTML = catData.items.map(cat => `
-                    <button onclick="renderSeries('${cat.sys.id}'); toggleMenu();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">${cat.fields.name || 'Untitled'}</button>
+                    <button onclick="renderSeries('${cat.sys.id}'); toggleProducts();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">${cat.fields.name || 'Untitled'}</button>
                 `).join('');
                 view.innerHTML = '<p class="text-center col-span-3">請選擇類別</p>';
 
-                // 2. 抓取大圖與站點設定 (包含動態品牌標牌)
                 const siteData = await client.getEntries({ content_type: 'siteSettings', include: 1 });
                 if (siteData.items.length > 0) {
                     const fields = siteData.items[0].fields;
-                    // 更新大圖
-                    if (fields.heroImage) {
-                        hero.querySelector('img').src = 'https:' + fields.heroImage.fields.file.url;
-                    }
-                    
-                    // 動態品牌名稱圖片邏輯
+                    if (fields.heroImage) hero.querySelector('img').src = 'https:' + fields.heroImage.fields.file.url;
                     if (fields.brandName) {
-                        // 如果 brandName 有綁定圖片，取得 URL 並更換圖片
-                        const logoUrl = fields.brandName.fields?.file?.url 
-                            ? 'https:' + fields.brandName.fields.file.url 
-                            : 'logo.png';
-                        brandImage.src = logoUrl;
+                        brandImage.src = fields.brandName.fields?.file?.url ? 'https:' + fields.brandName.fields.file.url : 'logo.png';
                         logoContainer.classList.remove('hidden');
                         brandTitle.classList.add('hidden');
                     } else {
-                        // 如果沒有設定圖片，則退回顯示大字體標題
                         logoContainer.classList.add('hidden');
                         brandTitle.classList.remove('hidden');
                     }
-                    
-                    // 更新 Slogan 文字
-                    if (fields.slogan) {
-                        brandSlogan.textContent = fields.slogan;
-                    }
+                    if (fields.slogan) brandSlogan.textContent = fields.slogan;
                 }
             } catch (err) { console.error(err); }
         }
