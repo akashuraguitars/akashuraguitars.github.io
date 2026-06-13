@@ -9,13 +9,13 @@
 </head>
 <body class="bg-gray-100">
 
+    <!-- 導航列 (已取消左上角寫死的 LOGO) -->
     <nav class="bg-black text-white p-5 sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <a href="/"><img src="logo.png" alt="Logo" class="h-12 md:h-16 w-auto object-contain"></a>
+        <div class="container mx-auto flex justify-end items-center">
             <ul class="flex space-x-8 text-sm uppercase font-light">
                 <li class="relative">
                     <button onclick="toggleMenu()" class="hover:text-gray-400">Products</button>
-                    <div id="dropdown-menu" class="absolute left-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
+                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
                 </li>
                 <li class="text-gray-600 cursor-not-allowed">Story</li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
@@ -24,9 +24,10 @@
         </div>
     </nav>
 
-    <div class="text-center py-6 bg-white shadow-sm">
-        <h1 class="text-3xl font-bold tracking-widest text-black">Akashura Guitars</h1>
-        <p class="text-base text-gray-500 mt-1 font-light tracking-widest uppercase">Crafting Personality.</p>
+    <!-- 中間品牌區塊 (已改為動態容器，支援大比例品牌標牌) -->
+    <div id="brand-header" class="text-center py-10 bg-white shadow-sm border-b border-gray-100">
+        <h1 id="brand-title" class="text-4xl md:text-5xl font-extrabold tracking-widest text-black uppercase">Akashura Guitars</h1>
+        <p id="brand-slogan" class="text-base md:text-lg text-gray-500 mt-2 font-light tracking-widest uppercase">Crafting Personality.</p>
     </div>
 
     <!-- 形象大圖 -->
@@ -35,7 +36,7 @@
     </div>
 
     <div id="content-view" class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
-        <p class="text-center col-span-3">Loading...</p>
+        <p class="text-center col-span-3 text-gray-500">Loading...</p>
     </div>
 
     <script>
@@ -47,6 +48,8 @@
         const view = document.getElementById('content-view');
         const dropdown = document.getElementById('dropdown-menu');
         const hero = document.getElementById('hero-section');
+        const brandTitle = document.getElementById('brand-title');
+        const brandSlogan = document.getElementById('brand-slogan');
 
         function toggleMenu() { dropdown.classList.toggle('hidden'); }
 
@@ -56,13 +59,32 @@
             return img?.fields?.file ? 'https:' + img.fields.file.url : 'https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=300&q=80';
         }
 
+        // 初始化選單與大圖，並動態抓取品牌標牌資訊
         async function initNav() {
             try {
-                const data = await client.getEntries({ content_type: 'category' });
-                dropdown.innerHTML = data.items.map(cat => `
+                // 1. 抓取分類
+                const catData = await client.getEntries({ content_type: 'category' });
+                dropdown.innerHTML = catData.items.map(cat => `
                     <button onclick="renderSeries('${cat.sys.id}'); toggleMenu();" class="block w-full text-left px-4 py-2 hover:bg-gray-100">${cat.fields.name || 'Untitled'}</button>
                 `).join('');
                 view.innerHTML = '<p class="text-center col-span-3">請選擇類別</p>';
+
+                // 2. 抓取大圖與站點設定 (包含動態品牌標牌)
+                const siteData = await client.getEntries({ content_type: 'siteSettings', include: 1 });
+                if (siteData.items.length > 0) {
+                    const fields = siteData.items[0].fields;
+                    // 更新大圖
+                    if (fields.heroImage) {
+                        hero.querySelector('img').src = 'https:' + fields.heroImage.fields.file.url;
+                    }
+                    // 更新品牌名稱與 Slogan (如果您在 Contentful 建立了對應欄位)
+                    if (fields.brandName) {
+                        brandTitle.textContent = fields.brandName;
+                    }
+                    if (fields.slogan) {
+                        brandSlogan.textContent = fields.slogan;
+                    }
+                }
             } catch (err) { console.error(err); }
         }
 
@@ -70,10 +92,7 @@
             hero.classList.add('hidden');
             try {
                 const data = await client.getEntries({ content_type: 'series' });
-                const filtered = data.items.filter(s => {
-                    console.log("Checking Series:", s.fields.series, "Category match:", s.fields.category?.sys?.id === catId);
-                    return s.fields.category?.sys?.id === catId;
-                });
+                const filtered = data.items.filter(s => s.fields.category?.sys?.id === catId);
                 view.innerHTML = filtered.map(s => `
                     <div onclick="renderSubSeries('${s.sys.id}')" class="bg-white p-6 shadow-lg cursor-pointer hover:scale-105 transition rounded-xl text-center">
                         <img src="${getImageUrl(s.fields)}" class="w-full h-48 object-cover mb-4 rounded-lg">
@@ -87,11 +106,9 @@
             try {
                 const data = await client.getEntries({ content_type: 'subseries' });
                 const filtered = data.items.filter(ss => {
-                    // 根據您剛剛 curl 的結果，series 是陣列
                     const sId = Array.isArray(ss.fields.series) ? ss.fields.series[0]?.sys?.id : ss.fields.series?.sys?.id;
                     return sId === seriesId;
                 });
-                
                 view.innerHTML = filtered.map(ss => `
                     <div onclick="renderProducts('${ss.sys.id}')" class="bg-white p-6 shadow-lg cursor-pointer hover:scale-105 transition rounded-xl text-center">
                         <img src="${getImageUrl(ss.fields)}" class="w-full h-48 object-cover mb-4 rounded-lg">
@@ -108,9 +125,7 @@
                     const subId = Array.isArray(g.fields.subseries) ? g.fields.subseries[0]?.sys?.id : g.fields.subseries?.sys?.id;
                     return subId === subSeriesId;
                 });
-                
                 if (filtered.length === 0) { view.innerHTML = '<p class="col-span-3 text-center">No products found.</p>'; return; }
-                
                 view.innerHTML = filtered.map(g => `
                     <a href="detail.html?id=${g.sys.id}" class="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition block">
                         <img src="${getImageUrl(g.fields)}" class="w-full h-64 object-cover mb-4 rounded-lg">
