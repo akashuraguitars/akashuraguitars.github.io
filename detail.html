@@ -8,37 +8,30 @@
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 </head>
 <body class="bg-gray-100">
-    <!-- 導航列與首頁完全同步 -->
-    <nav class="bg-black text-white p-5 shadow-md sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="/">
-                    <img src="logo.png" alt="Akashura Logo" class="h-[24px] w-auto object-contain">
-                </a>
-            </div>
-            <ul class="flex space-x-4 text-sm uppercase font-light">
+
+    <!-- 導航列 -->
+    <nav class="bg-black text-white p-5 sticky top-0 z-50">
+        <div class="container mx-auto flex justify-end items-center">
+            <ul class="flex space-x-8 text-sm uppercase font-light">
                 <li class="relative">
-                    <a href="/" class="hover:text-gray-400">HOME</a>
+                    <button onclick="toggleMenu()" class="hover:text-gray-400">Products</button>
+                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50"></div>
                 </li>
-                <li class="relative">
-                    <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
-                    <!-- STORY 下拉選單 -->
-                    <div id="story-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
-                    </div>
-                </li>
-                <li class="relative">
-                    <button onclick="toggleMenu()" class="hover:text-gray-400">PRODUCTS</button>
-                    <!-- Products 下拉選單 -->
-                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
-                        <!-- 這裡應與首頁邏輯保持一致 -->
-                    </div>
-                </li>
+                <li class="text-gray-600 cursor-not-allowed">Story</li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
                 <li class="text-gray-600 cursor-not-allowed">Contact</li>
             </ul>
         </div>
     </nav>
+
+    <!-- 中間品牌區塊 -->
+    <div id="brand-header" class="flex flex-col items-center justify-center py-3 bg-white shadow-sm border-b border-gray-100 px-4">
+        <div id="brand-logo-container" class="w-[85%] md:w-[45%] max-w-[650px] flex justify-center mb-0">
+            <img id="brand-image" src="logo.png" alt="Akashura Guitars" class="w-full h-auto object-contain">
+        </div>
+        <h1 id="brand-title" class="text-4xl md:text-5xl font-extrabold tracking-widest text-black uppercase hidden">Akashura Guitars</h1>
+        <p id="brand-slogan" class="text-xs md:text-sm text-gray-500 font-light tracking-widest uppercase text-center mt-0 tracking-[0.26em] md:tracking-[0.43em] whitespace-nowrap">Crafting Personality.</p>
+    </div>
 
     <div class="p-10">
         <div id="detail-view" class="max-w-6xl mx-auto bg-white p-8 rounded shadow">
@@ -47,22 +40,32 @@
     </div>
 
     <script>
-    function toggleMenu() {
-        document.getElementById('dropdown-menu')?.classList.toggle('hidden');
-        document.getElementById('story-menu')?.classList.toggle('hidden');
-    }
-    const client = contentful.createClient({
+        const client = contentful.createClient({
             space: 'w2up5vfofaou',
             accessToken: 'z3G9FnnQMyBbrnk1VaOzrvqST7WlTnnEs703R8G-tdQ'
         });
 
-        // 重新同步首頁的 dropdown 載入邏輯
+        const dropdown = document.getElementById('dropdown-menu');
+        function toggleMenu() { dropdown.classList.toggle('hidden'); }
+
         async function syncNav() {
             try {
                 const catData = await client.getEntries({ content_type: 'category' });
-                document.getElementById('dropdown-menu').innerHTML = catData.items.map(cat => `
+                dropdown.innerHTML = catData.items.map(cat => `
                     <a href="/?cat=${cat.sys.id}" class="block px-4 py-2 hover:bg-gray-100">${cat.fields.name || 'Untitled'}</a>
                 `).join('');
+                
+                // 動態載入品牌設定 (Logo + Slogan)
+                const siteData = await client.getEntries({ content_type: 'siteSettings', include: 1 });
+                if (siteData.items.length > 0) {
+                    const fields = siteData.items[0].fields;
+                    if (fields.brandName) {
+                        document.getElementById('brand-image').src = 'https:' + fields.brandName.fields.file.url;
+                    }
+                    if (fields.slogan) {
+                        document.getElementById('brand-slogan').textContent = fields.slogan;
+                    }
+                }
             } catch (err) { console.error(err); }
         }
         syncNav();
@@ -74,14 +77,7 @@
             try {
                 const entry = await client.getEntry(productId);
                 const fields = entry.fields;
-                
-                let imageHtml = '';
-                if (fields.image && fields.image.length > 0) {
-                    fields.image.forEach(img => {
-                        const url = 'https:' + img.fields.file.url;
-                        imageHtml += `<img src="${url}" class="w-full h-auto max-h-[600px] object-contain rounded mb-4">`;
-                    });
-                }
+                let imageHtml = fields.image?.map(img => `<img src="https:${img.fields.file.url}" class="w-full h-auto max-h-[600px] object-contain rounded mb-4">`).join('') || '';
 
                 document.getElementById('detail-view').innerHTML = `
                     ${imageHtml}
