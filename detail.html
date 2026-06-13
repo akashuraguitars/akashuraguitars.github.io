@@ -18,9 +18,19 @@
             </div>
             <ul class="flex space-x-8 text-sm uppercase font-light">
                 <li class="relative">
-                    <a href="/" class="hover:text-gray-400 cursor-pointer">Products</a>
+                    <button onclick="toggleMenu()" class="hover:text-gray-400">STORY</button>
+                    <!-- Story 下拉選單 -->
+                    <div id="story-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
+                    </div>
                 </li>
-                <li class="text-gray-600 cursor-not-allowed">Story</li>
+                <li class="relative">
+                    <button onclick="toggleMenu()" class="hover:text-gray-400">Products</button>
+                    <!-- Products 下拉選單 -->
+                    <div id="dropdown-menu" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
+                        <!-- 這裡應與首頁邏輯保持一致 -->
+                    </div>
+                </li>
                 <li class="text-gray-600 cursor-not-allowed">Artists</li>
                 <li class="text-gray-600 cursor-not-allowed">Contact</li>
             </ul>
@@ -34,10 +44,25 @@
     </div>
 
     <script>
-        const client = contentful.createClient({
+    function toggleMenu() {
+        document.getElementById('dropdown-menu')?.classList.toggle('hidden');
+        document.getElementById('story-menu')?.classList.toggle('hidden');
+    }
+    const client = contentful.createClient({
             space: 'w2up5vfofaou',
             accessToken: 'z3G9FnnQMyBbrnk1VaOzrvqST7WlTnnEs703R8G-tdQ'
         });
+
+        // 重新同步首頁的 dropdown 載入邏輯
+        async function syncNav() {
+            try {
+                const catData = await client.getEntries({ content_type: 'category' });
+                document.getElementById('dropdown-menu').innerHTML = catData.items.map(cat => `
+                    <a href="/?cat=${cat.sys.id}" class="block px-4 py-2 hover:bg-gray-100">${cat.fields.name || 'Untitled'}</a>
+                `).join('');
+            } catch (err) { console.error(err); }
+        }
+        syncNav();
 
         const params = new URLSearchParams(window.location.search);
         const productId = params.get('id');
