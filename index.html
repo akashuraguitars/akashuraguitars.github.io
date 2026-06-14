@@ -100,7 +100,7 @@
                 view.innerHTML = filtered.map(s => `
                     <div onclick="renderSubSeries('${s.sys.id}')" class="bg-white p-6 shadow-lg cursor-pointer hover:scale-105 transition rounded-xl text-center">
                         <img src="${getImageUrl(s.fields)}" class="w-full h-48 object-cover mb-4 rounded-lg">
-                        <h2 class="text-xl font-bold uppercase">${s.fields.series || s.fields.name || 'Untitled'}</h2>
+                        <h2 class="text-xl font-bold uppercase text-red-600">${s.fields.series || 'Untitled'}</h2>
                     </div>
                 `).join('');
             } catch (err) { console.error(err); }
@@ -116,7 +116,7 @@
                 view.innerHTML = filtered.map(ss => `
                     <div onclick="renderProducts('${ss.sys.id}')" class="bg-white p-6 shadow-lg cursor-pointer hover:scale-105 transition rounded-xl text-center">
                         <img src="${getImageUrl(ss.fields)}" class="w-full h-48 object-cover mb-4 rounded-lg">
-                        <h2 class="text-xl font-bold uppercase">${ss.fields.subseriesName || ss.fields.name || 'Untitled'}</h2>
+                        <h2 class="text-xl font-bold uppercase text-red-600">${ss.fields.name || ss.fields.subseriesName || 'Untitled'}</h2>
                     </div>
                 `).join('');
             } catch (err) { console.error(err); }
@@ -133,7 +133,7 @@
                 view.innerHTML = filtered.map(g => `
                     <a href="detail.html?id=${g.sys.id}" class="bg-white p-6 shadow-lg rounded-xl hover:scale-105 transition block">
                         <img src="${getImageUrl(g.fields)}" class="w-full h-64 object-cover mb-4 rounded-lg">
-                        <h2 class="font-bold text-lg uppercase">${g.fields.title || 'Untitled'}</h2>
+                        <h2 class="font-bold text-lg uppercase text-red-600">${g.fields.title || 'Untitled Guitar'}</h2>
                     </a>
                 `).join('');
             } catch (err) { console.error(err); }
