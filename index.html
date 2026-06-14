@@ -145,10 +145,22 @@
         async function renderStory(storyId) {
             hero.classList.add('hidden');
             const data = await client.getEntry(storyId);
-            // RichText 處理較複雜，這裡先簡單顯示文本，之後可加上 RichText 解析器
-            view.innerHTML = `<div class="col-span-3 text-white">
-                <h1 class="text-3xl font-bold mb-4 uppercase">${data.fields.brandStory || 'Story'}</h1>
-                <p>${JSON.stringify(data.fields.storyBox)}</p>
+            
+            // 簡易 Rich Text 解析器
+            const content = data.fields.storyBox.content.map(node => {
+                if (node.nodeType === 'paragraph') {
+                    return `<p class="mb-4 text-lg font-light leading-relaxed">${node.content.map(c => c.value).join('')}</p>`;
+                }
+                if (node.nodeType === 'embedded-asset-block') {
+                    const url = 'https:' + node.data.target.fields.file.url;
+                    return `<img src="${url}" class="w-full my-8 rounded-lg shadow-xl">`;
+                }
+                return '';
+            }).join('');
+
+            view.innerHTML = `<div class="col-span-3 text-white max-w-4xl mx-auto px-4">
+                <h1 class="text-4xl font-bold mb-8 uppercase tracking-widest text-red-600">${data.fields.brandStory || 'Story'}</h1>
+                <div class="space-y-4">${content}</div>
             </div>`;
         }
 
