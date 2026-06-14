@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/contentful@latest/dist/contentful.browser.min.js"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-black text-white">
 
     <!-- 導航列 -->
     <nav class="bg-black text-white p-5 sticky top-0 z-50">
@@ -46,8 +46,8 @@
     </div>
 
     <!-- 形象大圖 -->
-    <div id="hero-section" class="w-full relative overflow-hidden aspect-[16/9] md:aspect-[21/9]">
-        <img src="https://images.ctfassets.net/w2up5vfofaou/6IlEBCrhlT4XPvzgjbZhOa/c9410775bd83e355229c485b01abfb1a/Gemini_Generated_Image_yte.png" class="absolute w-full h-full object-cover" alt="Hero Image">
+    <div id="hero-section" class="w-full relative overflow-hidden aspect-[16/9] md:aspect-[21/9] bg-[url('/bgrond.jpg')] bg-cover bg-center">
+        <img id="hero-image" src="https://images.ctfassets.net/w2up5vfofaou/6IlEBCrhlT4XPvzgjbZhOa/c9410775bd83e355229c485b01abfb1a/Gemini_Generated_Image_yte.png" class="absolute w-full h-full object-cover" alt="Hero Image">
     </div>
 
     <div id="content-view" class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
