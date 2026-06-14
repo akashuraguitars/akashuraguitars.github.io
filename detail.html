@@ -19,7 +19,6 @@
                 <li class="relative">
                     <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
                     <div id="story-dropdown" class="absolute right-0 mt-2 w-64 bg-white text-black shadow-xl hidden p-4 z-50">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
                     </div>
                 </li>
                 <li class="relative">
@@ -68,6 +67,11 @@
                 const catData = await client.getEntries({ content_type: 'category' });
                 dropdown.innerHTML = catData.items.map(cat => `
                     <a href="/?cat=${cat.sys.id}" class="block px-4 py-2 hover:bg-gray-100 uppercase text-sm">${cat.fields.name || 'Untitled'}</a>
+                `).join('');
+                
+                const storyData = await client.getEntries({ content_type: 'story' });
+                storyDropdown.innerHTML = storyData.items.map(s => `
+                    <a href="/?story=${s.sys.id}" class="block px-4 py-2 hover:bg-gray-100 uppercase text-sm">${s.fields.brandStory || 'Story'}</a>
                 `).join('');
                 
                 const siteData = await client.getEntries({ content_type: 'siteSettings', include: 1 });
