@@ -45,7 +45,7 @@
 
     <!-- 形象大圖 -->
     <div id="hero-section" class="w-full relative overflow-hidden aspect-[16/9] md:aspect-[21/9]">
-        <img id="hero-image" src="https://images.ctfassets.net/w2up5vfofaou/6IlEBCrhlT4XPvzgjbZhOa/c9410775bd83e355229c485b01abfb1a/Gemini_Generated_Image_yte.png" class="absolute w-full h-full object-cover" alt="Hero Image">
+        <img id="hero-image" class="absolute w-full h-full object-cover" alt="Hero Image">
     </div>
 
     <div id="content-view" class="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
@@ -84,7 +84,8 @@
                 const siteData = await client.getEntries({ content_type: 'siteSettings', include: 1 });
                 if (siteData.items.length > 0) {
                     const fields = siteData.items[0].fields;
-                    if (fields.heroImage) document.getElementById('hero-image').src = 'https:' + fields.heroImage.fields.file.url;
+                    const heroImg = document.getElementById('hero-image');
+                    if (fields.heroImage) heroImg.src = 'https:' + fields.heroImage.fields.file.url;
                     if (fields.brandName) brandImage.src = 'https:' + fields.brandName.fields.file.url;
                     if (fields.slogan) brandSlogan.textContent = fields.slogan;
                 }
