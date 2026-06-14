@@ -18,9 +18,7 @@
                 </li>
                 <li class="relative">
                     <button onclick="toggleStory()" class="hover:text-gray-400">STORY</button>
-                    <div id="story-dropdown" class="absolute right-0 mt-2 w-48 bg-white text-black shadow-xl hidden p-2 z-50">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">Our Heritage</a>
-                    </div>
+                    <div id="story-dropdown" class="absolute right-0 mt-2 w-64 bg-white text-black shadow-xl hidden p-4 z-50"></div>
                 </li>
                 <li class="relative">
                     <button onclick="toggleProducts()" class="hover:text-gray-400">PRODUCTS</button>
@@ -81,6 +79,11 @@
                     <button onclick="renderSeries('${cat.sys.id}'); toggleProducts();" class="block w-full text-left px-4 py-2 hover:bg-gray-100 uppercase">${cat.fields.name || 'Untitled'}</button>
                 `).join('');
                 
+                const storyData = await client.getEntries({ content_type: 'story' });
+                storyDropdown.innerHTML = storyData.items.map(s => `
+                    <button onclick="renderStory('${s.sys.id}'); toggleStory();" class="block w-full text-left px-4 py-2 hover:bg-gray-100 uppercase">${s.fields.brandStory || 'Story'}</button>
+                `).join('');
+                
                 const siteData = await client.getEntries({ content_type: 'siteSettings', include: 1 });
                 if (siteData.items.length > 0) {
                     const fields = siteData.items[0].fields;
@@ -137,6 +140,16 @@
                     </a>
                 `).join('');
             } catch (err) { console.error(err); }
+        }
+
+        async function renderStory(storyId) {
+            hero.classList.add('hidden');
+            const data = await client.getEntry(storyId);
+            // RichText 處理較複雜，這裡先簡單顯示文本，之後可加上 RichText 解析器
+            view.innerHTML = `<div class="col-span-3 text-white">
+                <h1 class="text-3xl font-bold mb-4 uppercase">${data.fields.brandStory || 'Story'}</h1>
+                <p>${JSON.stringify(data.fields.storyBox)}</p>
+            </div>`;
         }
 
         initNav();
