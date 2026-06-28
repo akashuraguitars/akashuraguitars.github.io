@@ -3,126 +3,110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Akashura Guitars — a modern guitar brand built around tone, identity, visual culture and stage presence." />
-  <title>Akashura Guitars | Crafting Personality</title>
+  <meta name="description" content="Akashura Guitars — modern guitars built around tone, identity, mythic visual culture and stage presence." />
+  <title>Akashura Guitars | Crimson Shura</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
-    body { background-color: #020202; }
-    .glass { background: rgba(0,0,0,.68); backdrop-filter: blur(14px); }
-    .red-glow { box-shadow: 0 0 90px rgba(185,28,28,.28); }
-    .outline-text { -webkit-text-stroke: 1px rgba(255,255,255,.22); color: transparent; }
-    .noise:before { content:""; position:absolute; inset:0; pointer-events:none; opacity:.08; background-image: radial-gradient(#fff 1px, transparent 1px); background-size: 18px 18px; }
+    body { background:#030303; }
+    .gold { color:#d7b46a; }
+    .glass { background: rgba(0,0,0,.64); backdrop-filter: blur(14px); }
+    .red-glow { box-shadow: 0 0 70px rgba(185,28,28,.26); }
+    .card-glow { box-shadow: inset 0 0 0 1px rgba(215,180,106,.24), 0 30px 80px rgba(0,0,0,.35); }
+    .hero-title { text-shadow: 0 0 38px rgba(185,28,28,.50); }
+    .serif { font-family: Georgia, 'Times New Roman', serif; }
+    .bg-ember { background: radial-gradient(circle at 70% 20%, rgba(185,28,28,.25), transparent 35%), radial-gradient(circle at 20% 90%, rgba(127,29,29,.22), transparent 40%), #030303; }
   </style>
 </head>
 <body class="text-white bg-black selection:bg-red-700 selection:text-white">
-
-  <nav class="fixed top-0 left-0 right-0 z-50 bg-black/85 backdrop-blur border-b border-white/10">
-    <div class="max-w-7xl mx-auto px-5 py-4 flex flex-wrap items-center justify-between gap-4">
-      <a href="#top" class="text-xs md:text-sm tracking-[0.42em] uppercase font-bold">Akashura</a>
-      <div class="flex flex-wrap gap-x-5 gap-y-2 text-[10px] md:text-xs uppercase tracking-[0.24em] text-gray-300">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-black/88 backdrop-blur border-b border-[#d7b46a]/20">
+    <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between gap-4">
+      <a href="#top" class="flex items-center gap-3">
+        <img src="logo.png" alt="Akashura" class="h-8 md:h-10 w-auto object-contain" onerror="this.style.display='none'">
+        <span class="serif text-xs md:text-sm tracking-[0.34em] uppercase gold">Akashura</span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-xs uppercase tracking-[0.22em] text-[#d7b46a]/80">
+        <a href="#products" class="hover:text-red-400 transition">Guitars</a>
+        <a href="#worlds" class="hover:text-red-400 transition">Worlds</a>
         <a href="#story" class="hover:text-red-400 transition">Story</a>
-        <a href="#market" class="hover:text-red-400 transition">Why Now</a>
-        <a href="#design" class="hover:text-red-400 transition">Design</a>
-        <a href="#products" class="hover:text-red-400 transition">Products</a>
+        <a href="#mockups" class="hover:text-red-400 transition">Launch</a>
         <a href="#contact" class="hover:text-red-400 transition">Contact</a>
       </div>
+      <a href="#products" class="text-[10px] md:text-xs uppercase tracking-[0.22em] border border-[#d7b46a]/40 px-4 py-2 gold hover:bg-red-900/40 transition">Explore</a>
     </div>
   </nav>
 
-  <header id="top" class="relative min-h-screen overflow-hidden noise flex items-center pt-28">
-    <img src="bgrond.jpg" alt="Akashura background" class="absolute inset-0 w-full h-full object-cover opacity-45 scale-105" />
-    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/88 to-black/28"></div>
-    <div class="absolute inset-0 bg-[radial-gradient(circle_at_74%_24%,rgba(185,28,28,.36),transparent_32%)]"></div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-6 py-20 grid lg:grid-cols-12 gap-10 items-center w-full">
+  <header id="top" class="relative min-h-screen overflow-hidden flex items-center pt-24 bg-black">
+    <picture>
+      <source media="(max-width: 767px)" srcset="assets/images/hero/hero-crimson-shura-mobile.png">
+      <img src="assets/images/hero/hero-crimson-shura.png" alt="Crimson Shura Hero" class="absolute inset-0 w-full h-full object-cover opacity-95" onerror="this.onerror=null; this.src='bgrond.jpg'; this.classList.add('opacity-50');">
+    </picture>
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/35 to-black/25"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+    <div class="relative z-10 max-w-7xl mx-auto w-full px-6 py-24 grid lg:grid-cols-12 gap-8 items-end">
       <div class="lg:col-span-7">
-        <p class="text-red-500 uppercase tracking-[0.5em] text-xs md:text-sm mb-6">Future Mythology / Modern Guitars</p>
-        <h1 class="text-5xl md:text-8xl xl:text-9xl font-black uppercase leading-[0.88] tracking-tight">
-          Not a Copy.<br />
-          <span class="text-red-600">A Weapon of Self.</span>
-        </h1>
-        <p class="mt-8 max-w-2xl text-gray-200 text-lg md:text-2xl leading-relaxed font-light">
-          Akashura 不是再做一把便宜的復古複製品。我們要做的是一把能讓玩家一眼被記住、上台有角色、錄音有聲音、社群有畫面的現代電吉他。
-        </p>
+        <p class="gold uppercase tracking-[0.48em] text-xs md:text-sm mb-5">Akashura Guitars</p>
+        <h1 class="serif hero-title text-5xl md:text-8xl xl:text-9xl font-black uppercase leading-[0.86] tracking-tight text-red-600">Crimson<br>Shura</h1>
+        <p class="mt-7 gold text-sm md:text-xl uppercase tracking-[0.28em]">Aggression forged in crimson.</p>
+        <p class="mt-7 max-w-2xl text-gray-200 text-lg md:text-2xl leading-relaxed font-light">不是復古複製品，而是一把讓玩家上台有角色、錄音有聲音、社群有畫面的現代電吉他。</p>
         <div class="mt-10 flex flex-wrap gap-4">
-          <a href="#products" class="px-8 py-4 bg-red-700 hover:bg-red-600 transition uppercase tracking-[0.22em] text-xs red-glow">Explore Direction</a>
-          <a href="#story" class="px-8 py-4 border border-white/30 hover:border-red-500 hover:text-red-400 transition uppercase tracking-[0.22em] text-xs">Brand Story</a>
-        </div>
-      </div>
-      <div class="lg:col-span-5">
-        <div class="bg-white p-6 md:p-9 red-glow">
-          <img src="logo.png" alt="Akashura Guitars" class="w-full h-auto object-contain" />
-          <p class="text-black/55 mt-4 text-center uppercase tracking-[0.42em] text-[10px] md:text-xs">Crafting Personality.</p>
+          <a href="#products" class="px-8 py-4 bg-red-800 hover:bg-red-700 transition uppercase tracking-[0.22em] text-xs red-glow">Explore Crimson Shura</a>
+          <a href="#worlds" class="px-8 py-4 border border-[#d7b46a]/45 hover:border-red-500 hover:text-red-400 transition uppercase tracking-[0.22em] text-xs gold">View All Worlds</a>
         </div>
       </div>
     </div>
   </header>
 
   <main>
-    <section id="story" class="bg-black py-20 md:py-28 border-y border-white/10">
-      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-10">
-        <div class="md:col-span-5">
-          <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-4">Akashura Manifesto</p>
-          <h2 class="text-4xl md:text-6xl font-black uppercase leading-none">從修羅到舞台，<br />從樂器到角色。</h2>
-          <p class="mt-6 text-gray-400 leading-relaxed text-lg">
-            新世代玩家不只想買規格，也想買一種身份。吉他要能拍照、能上短影音、能站上舞台，也要真的好彈、好錄、好改、好帶走。
-          </p>
-        </div>
-        <div class="md:col-span-7 grid md:grid-cols-2 gap-4">
-          <article class="glass border border-white/10 p-7 hover:border-red-700/70 transition"><h3 class="text-xl font-bold uppercase text-red-500">Visual First</h3><p class="mt-4 text-gray-300 leading-relaxed">在社群時代，第一眼就是市場。赤紅、黑曜、虎紋、未來輪廓，都不是裝飾，是讓玩家願意分享的理由。</p></article>
-          <article class="glass border border-white/10 p-7 hover:border-red-700/70 transition"><h3 class="text-xl font-bold uppercase text-red-500">Player Honest</h3><p class="mt-4 text-gray-300 leading-relaxed">玩家不缺另一把仿古琴。玩家缺的是合理價位、穩定手感、清楚定位，以及一把有自己脾氣的樂器。</p></article>
-          <article class="glass border border-white/10 p-7 hover:border-red-700/70 transition"><h3 class="text-xl font-bold uppercase text-red-500">Anime / Metal / Space</h3><p class="mt-4 text-gray-300 leading-relaxed">二次元、太空搖滾、金屬、Funk、城市壓抑感，這些不是旁枝題材，而是 Akashura 的文化燃料。</p></article>
-          <article class="glass border border-white/10 p-7 hover:border-red-700/70 transition"><h3 class="text-xl font-bold uppercase text-red-500">Built for Content</h3><p class="mt-4 text-gray-300 leading-relaxed">每個系列都要能變成 Demo、短片、角色故事、封面視覺與舞台造型，讓產品自己長出內容。</p></article>
-        </div>
+    <section id="story" class="bg-black py-16 md:py-24 border-y border-[#d7b46a]/15">
+      <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-4">
+        <article class="glass card-glow p-7"><p class="gold text-xs uppercase tracking-[0.25em]">Built Without Compromise</p><p class="mt-4 text-gray-400 leading-relaxed">精準手感、穩定結構、舞台與錄音都能成立。</p></article>
+        <article class="glass card-glow p-7"><p class="gold text-xs uppercase tracking-[0.25em]">Designed for Expression</p><p class="mt-4 text-gray-400 leading-relaxed">不是規格堆疊，而是讓玩家形成記憶點。</p></article>
+        <article class="glass card-glow p-7"><p class="gold text-xs uppercase tracking-[0.25em]">Dark. Bold. Timeless.</p><p class="mt-4 text-gray-400 leading-relaxed">神話、金屬、二次元與現代樂器語言的融合。</p></article>
+        <article class="glass card-glow p-7"><p class="gold text-xs uppercase tracking-[0.25em]">Made to be Legendary</p><p class="mt-4 text-gray-400 leading-relaxed">從產品到內容，讓品牌自己長出故事。</p></article>
       </div>
     </section>
 
-    <section id="market" class="bg-zinc-950 py-20 md:py-28 border-b border-white/10">
+    <section id="worlds" class="bg-ember py-20 md:py-28 border-b border-[#d7b46a]/15">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="max-w-3xl mb-12">
-          <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-4">Market Direction</p>
-          <h2 class="text-4xl md:text-6xl font-black uppercase leading-none">現在市場要的是<br />有故事的差異化。</h2>
-          <p class="mt-6 text-gray-400 leading-relaxed text-lg">Akashura 的位置不是復古複製品，而是把產品變成角色，把玩家變成品牌畫面的一部分。</p>
+        <div class="text-center mb-12">
+          <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-4">Product Worlds</p>
+          <h2 class="serif text-4xl md:text-6xl font-black uppercase gold">Choose Your Form.</h2>
+          <p class="mt-5 text-gray-400 max-w-2xl mx-auto leading-relaxed">四個系列方向：舞台侵略、黑曜精準、夜叉美型、太空律動。圖片上傳後，這些卡片會直接變成完整視覺入口。</p>
         </div>
-        <div class="grid md:grid-cols-3 gap-5">
-          <div class="bg-black border border-white/10 p-8"><p class="text-5xl font-black outline-text">01</p><h3 class="mt-6 text-2xl font-bold text-white">反複製品</h3><p class="mt-4 text-gray-400 leading-relaxed">市場已經不缺便宜 Les Paul、Tele、Strat 複刻。Akashura 要用更鮮明的外型、配色與故事切入。</p></div>
-          <div class="bg-black border border-white/10 p-8"><p class="text-5xl font-black outline-text">02</p><h3 class="mt-6 text-2xl font-bold text-white">現代機能</h3><p class="mt-4 text-gray-400 leading-relaxed">輕量、人體工學、清楚高把位、重調弦穩定度、錄音清晰度，都是現代玩家真正會感受到的價值。</p></div>
-          <div class="bg-black border border-white/10 p-8"><p class="text-5xl font-black outline-text">03</p><h3 class="mt-6 text-2xl font-bold text-white">社群視覺</h3><p class="mt-4 text-gray-400 leading-relaxed">一把琴要能成為照片、短影音、封面、舞台與角色設定的核心，才有自然傳播力。</p></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="design" class="bg-black py-20 md:py-28 border-b border-white/10">
-      <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-10 items-center">
-        <div>
-          <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-4">Design Language</p>
-          <h2 class="text-4xl md:text-6xl font-black uppercase leading-none">赤紅修羅的侵略感，<br />夜叉的美型張力。</h2>
-          <p class="mt-6 text-gray-300 text-lg leading-relaxed">品牌視覺核心不是單純「酷」，而是把神話角色、金屬舞台、二次元輪廓與現代吉他工程結合。它可以兇、可以美、可以未來，也必須拿起來真的像一把要上台的琴。</p>
-        </div>
-        <div class="glass border border-red-900/40 p-8 red-glow">
-          <p class="text-xs uppercase tracking-[0.4em] text-red-500 mb-6">Akashura Tone Brief</p>
-          <div class="space-y-5">
-            <div class="flex justify-between border-b border-white/10 pb-3 gap-4"><span class="text-gray-400">Target Player</span><span class="font-bold text-right">Modern Rock / Metal / Fusion</span></div>
-            <div class="flex justify-between border-b border-white/10 pb-3 gap-4"><span class="text-gray-400">Visual Mood</span><span class="font-bold text-right">Crimson / Obsidian / Anime</span></div>
-            <div class="flex justify-between border-b border-white/10 pb-3 gap-4"><span class="text-gray-400">Content Use</span><span class="font-bold text-right">Demo / Short Video / Stage</span></div>
-            <div class="flex justify-between border-b border-white/10 pb-3 gap-4"><span class="text-gray-400">Brand Promise</span><span class="font-bold text-right">Personality Before Copy</span></div>
-          </div>
+        <div class="grid md:grid-cols-4 gap-5" id="products">
+          <a href="#contact" class="group glass card-glow overflow-hidden border border-[#d7b46a]/20 hover:border-red-600 transition">
+            <img src="assets/images/series/series-crimson-shura.png" alt="Crimson Shura" class="w-full h-52 object-cover opacity-90 group-hover:scale-105 transition duration-500" onerror="this.src='bgrond.jpg'">
+            <div class="p-6"><p class="text-red-500 text-xs uppercase tracking-[0.28em] mb-4">Series 01</p><h3 class="serif text-2xl font-black uppercase gold">Crimson Shura</h3><p class="mt-4 text-gray-400 text-sm leading-relaxed">高侵略舞台型，面向金屬、速彈、重型玩家。</p></div>
+          </a>
+          <a href="#contact" class="group glass card-glow overflow-hidden border border-[#d7b46a]/20 hover:border-red-600 transition">
+            <img src="assets/images/series/series-obsidian-modern.png" alt="Obsidian Modern" class="w-full h-52 object-cover opacity-90 group-hover:scale-105 transition duration-500" onerror="this.src='bgrond.jpg'">
+            <div class="p-6"><p class="text-red-500 text-xs uppercase tracking-[0.28em] mb-4">Series 02</p><h3 class="serif text-2xl font-black uppercase gold">Obsidian Modern</h3><p class="mt-4 text-gray-400 text-sm leading-relaxed">黑曜、俐落、錄音室取向，強調清晰與穩定。</p></div>
+          </a>
+          <a href="#contact" class="group glass card-glow overflow-hidden border border-[#d7b46a]/20 hover:border-red-600 transition">
+            <img src="assets/images/series/series-yasha-beauty.png" alt="Yasha Beauty" class="w-full h-52 object-cover opacity-90 group-hover:scale-105 transition duration-500" onerror="this.src='bgrond.jpg'">
+            <div class="p-6"><p class="text-red-500 text-xs uppercase tracking-[0.28em] mb-4">Series 03</p><h3 class="serif text-2xl font-black uppercase gold">Yasha Beauty</h3><p class="mt-4 text-gray-400 text-sm leading-relaxed">美型角色感，適合視覺系、二次元與舞台主角。</p></div>
+          </a>
+          <a href="#contact" class="group glass card-glow overflow-hidden border border-[#d7b46a]/20 hover:border-red-600 transition">
+            <img src="assets/images/series/series-space-funk.png" alt="Space Funk" class="w-full h-52 object-cover opacity-90 group-hover:scale-105 transition duration-500" onerror="this.src='bgrond.jpg'">
+            <div class="p-6"><p class="text-red-500 text-xs uppercase tracking-[0.28em] mb-4">Series 04</p><h3 class="serif text-2xl font-black uppercase gold">Space Funk</h3><p class="mt-4 text-gray-400 text-sm leading-relaxed">融合、Funk、太空搖滾，強調節奏與色彩辨識度。</p></div>
+          </a>
         </div>
       </div>
     </section>
 
-    <section id="products" class="bg-zinc-950 py-20 md:py-28 border-b border-white/10">
+    <section id="mockups" class="bg-black py-20 md:py-28 border-b border-[#d7b46a]/15">
       <div class="max-w-7xl mx-auto px-6">
-        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
-          <div><p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-4">Product Worlds</p><h2 class="text-4xl md:text-6xl font-black uppercase leading-none">Choose Your Form.</h2></div>
-          <p class="text-gray-400 max-w-xl leading-relaxed">這裡先用品牌世界觀呈現系列方向。下一步會把原本 Contentful 的 category / series / subseries / guitar 接回這個版型。</p>
+        <div class="max-w-3xl mb-10">
+          <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-4">Launch Assets</p>
+          <h2 class="serif text-4xl md:text-6xl font-black uppercase gold">Website Now Live.</h2>
+          <p class="mt-5 text-gray-400 leading-relaxed">這一區預留給「網站已上線」宣傳圖、桌機 mockup、手機 mockup 與系列頁展示圖。圖片上傳後會直接顯示。</p>
         </div>
-        <div class="grid md:grid-cols-4 gap-5">
-          <article class="group bg-black border border-white/10 p-7 min-h-[260px] hover:border-red-700 transition"><p class="text-red-500 text-xs uppercase tracking-[0.35em] mb-8">Series 01</p><h3 class="text-2xl font-black uppercase group-hover:text-red-500 transition">Crimson Shura</h3><p class="mt-5 text-gray-400 leading-relaxed">高侵略舞台型，面向金屬、速彈、重型玩家。</p></article>
-          <article class="group bg-black border border-white/10 p-7 min-h-[260px] hover:border-red-700 transition"><p class="text-red-500 text-xs uppercase tracking-[0.35em] mb-8">Series 02</p><h3 class="text-2xl font-black uppercase group-hover:text-red-500 transition">Obsidian Modern</h3><p class="mt-5 text-gray-400 leading-relaxed">黑曜、俐落、錄音室取向，強調清晰與穩定。</p></article>
-          <article class="group bg-black border border-white/10 p-7 min-h-[260px] hover:border-red-700 transition"><p class="text-red-500 text-xs uppercase tracking-[0.35em] mb-8">Series 03</p><h3 class="text-2xl font-black uppercase group-hover:text-red-500 transition">Yasha Beauty</h3><p class="mt-5 text-gray-400 leading-relaxed">美型角色感，適合視覺系、二次元與舞台主角。</p></article>
-          <article class="group bg-black border border-white/10 p-7 min-h-[260px] hover:border-red-700 transition"><p class="text-red-500 text-xs uppercase tracking-[0.35em] mb-8">Series 04</p><h3 class="text-2xl font-black uppercase group-hover:text-red-500 transition">Space Funk</h3><p class="mt-5 text-gray-400 leading-relaxed">融合、Funk、太空搖滾，強調節奏與色彩辨識度。</p></article>
+        <div class="grid md:grid-cols-2 gap-5">
+          <img src="assets/images/mockups/website-desktop-live.png" alt="Desktop Website Mockup" class="w-full rounded-lg border border-[#d7b46a]/20 object-cover" onerror="this.style.display='none'">
+          <img src="assets/images/mockups/website-mobile-live.png" alt="Mobile Website Mockup" class="w-full rounded-lg border border-[#d7b46a]/20 object-cover" onerror="this.style.display='none'">
+          <img src="assets/images/mockups/collection-page-live.png" alt="Collection Page Mockup" class="w-full rounded-lg border border-[#d7b46a]/20 object-cover" onerror="this.style.display='none'">
+          <img src="assets/images/mockups/website-now-live.png" alt="Website Now Live" class="w-full rounded-lg border border-[#d7b46a]/20 object-cover" onerror="this.style.display='none'">
         </div>
       </div>
     </section>
@@ -130,15 +114,15 @@
     <section id="contact" class="relative bg-black py-20 md:py-28 overflow-hidden">
       <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(185,28,28,.20),transparent_34%)]"></div>
       <div class="relative max-w-4xl mx-auto px-6 text-center">
-        <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-5">Next Stage</p>
-        <h2 class="text-4xl md:text-6xl font-black uppercase leading-none">Build the Guitar.<br />Build the Character.</h2>
+        <p class="text-red-500 uppercase tracking-[0.45em] text-xs mb-5">Akashura Guitars</p>
+        <h2 class="serif text-4xl md:text-6xl font-black uppercase leading-none gold">Build the Guitar.<br />Build the Character.</h2>
         <p class="mt-6 text-gray-400 text-lg leading-relaxed">Akashura 要賣的不是一個冰冷型號，而是一個玩家願意帶上舞台、願意拍下來、願意相信的身份。</p>
       </div>
     </section>
   </main>
 
-  <footer class="bg-black border-t border-white/10 py-10">
-    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-4 text-xs uppercase tracking-[0.25em] text-gray-500">
+  <footer class="bg-black border-t border-[#d7b46a]/15 py-10">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-4 text-xs uppercase tracking-[0.25em] text-[#d7b46a]/60">
       <p>© Akashura Guitars</p>
       <p>Crafting Personality. Built for Players with a Face.</p>
     </div>
